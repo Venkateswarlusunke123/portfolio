@@ -1,0 +1,304 @@
+@import "tailwindcss";
+
+:root {
+  --bg-primary: #030d07;
+  --bg-secondary: #060f0a;
+  --bg-card: rgba(0, 217, 126, 0.03);
+  --bg-card-hover: rgba(0, 217, 126, 0.06);
+  --border: rgba(0, 217, 126, 0.12);
+  --border-hover: rgba(0, 217, 126, 0.40);
+  --border-dim: rgba(255, 255, 255, 0.05);
+  --green: #00d97e;
+  --green-dim: #00a862;
+  --cyan: #0ea5e9;
+  --cyan-light: #38bdf8;
+  --purple: #7c3aed;
+  --purple-light: #a78bfa;
+  --amber: #f59e0b;
+  --red: #ef4444;
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --terminal-border: rgba(0, 217, 126, 0.15);
+  --terminal-glow: rgba(0, 217, 126, 0.25);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+::selection { background: rgba(0, 217, 126, 0.35); color: #fff; }
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--green); border-radius: 99px; }
+
+/* ── Gradient text ── */
+.gradient-text {
+  background: linear-gradient(135deg, #00d97e, #0ea5e9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Glass card ── */
+.glass-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.glass-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-hover);
+  box-shadow: 0 0 40px rgba(0, 217, 126, 0.15);
+  transform: translateY(-4px);
+}
+
+/* ── Agent card ── */
+.agent-card {
+  background: rgba(3, 13, 7, 0.85);
+  border: 1px solid var(--terminal-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+.agent-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(0,217,126,0.04) 0%, transparent 50%);
+  pointer-events: none;
+}
+.agent-card:hover {
+  background: rgba(3, 13, 7, 0.92);
+  border-color: rgba(0, 217, 126, 0.35);
+  box-shadow: 0 0 30px rgba(0, 217, 126, 0.12), inset 0 0 30px rgba(0, 217, 126, 0.03);
+  transform: translateY(-3px);
+}
+
+/* ── Section tag ── */
+.section-tag {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.8rem;
+  color: var(--green);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+/* ── Cursor blink ── */
+@keyframes blink { 50% { opacity: 0; } }
+.cursor-blink { animation: blink 1s step-end infinite; }
+
+/* ── Pulse dot (green) ── */
+@keyframes pulse-green {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 217, 126, 0.7); }
+  50% { box-shadow: 0 0 0 6px rgba(0, 217, 126, 0); }
+}
+.pulse-dot { animation: pulse-green 2s infinite; }
+
+/* ── Agent pulse (green glow expand) ── */
+@keyframes agent-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 217, 126, 0.7); }
+  50%       { box-shadow: 0 0 0 8px rgba(0, 217, 126, 0); }
+}
+.agent-pulse { animation: agent-pulse 2s infinite; }
+
+/* ── Agent pulse rect (SVG diagram) ── */
+@keyframes agent-pulse-rect {
+  0%, 100% { stroke-opacity: 0.2; stroke-width: 1; }
+  50%       { stroke-opacity: 0.6; stroke-width: 2; }
+}
+
+/* ── Boot line animation ── */
+@keyframes boot-line-in {
+  from { opacity: 0; transform: translateX(-8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.boot-line {
+  animation: boot-line-in 0.2s ease forwards;
+  opacity: 0;
+}
+
+/* ── Node pulse variants ── */
+@keyframes node-pulse-agent {
+  0%, 100% { filter: drop-shadow(0 0 4px #00d97e); opacity: 0.9; }
+  50%       { filter: drop-shadow(0 0 12px #00d97e); opacity: 1; }
+}
+@keyframes node-pulse-tool {
+  0%, 100% { filter: drop-shadow(0 0 4px #0ea5e9); }
+  50%       { filter: drop-shadow(0 0 12px #0ea5e9); }
+}
+@keyframes node-pulse-memory {
+  0%, 100% { filter: drop-shadow(0 0 4px #7c3aed); }
+  50%       { filter: drop-shadow(0 0 12px #7c3aed); }
+}
+@keyframes node-pulse-llm {
+  0%, 100% { filter: drop-shadow(0 0 4px #f59e0b); }
+  50%       { filter: drop-shadow(0 0 12px #f59e0b); }
+}
+
+/* ── Orbit animations (kept for compatibility) ── */
+@keyframes spin-cw { to { transform: rotate(360deg); } }
+@keyframes spin-ccw { to { transform: rotate(-360deg); } }
+.orbit-cw  { animation: spin-cw  linear infinite; }
+.orbit-ccw { animation: spin-ccw linear infinite; }
+
+/* ── Float ── */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.float-anim { animation: float ease-in-out infinite; }
+
+/* ── Scroll line ── */
+@keyframes scroll-down {
+  0%   { transform: scaleY(0); transform-origin: top; }
+  50%  { transform: scaleY(1); transform-origin: top; }
+  51%  { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+.scroll-line { animation: scroll-down 2.2s ease-in-out infinite; }
+
+/* ── Button glow ── */
+.btn-glow { box-shadow: 0 0 24px rgba(0, 217, 126, 0.4); }
+.btn-glow:hover { box-shadow: 0 0 44px rgba(0, 217, 126, 0.6); }
+
+/* ── Tag pills (green tinted) ── */
+.tag-pill {
+  background: rgba(0, 217, 126, 0.08);
+  border: 1px solid rgba(0, 217, 126, 0.22);
+  color: #00d97e;
+  padding: 0.25rem 0.75rem;
+  border-radius: 3px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  font-family: 'JetBrains Mono', monospace;
+  transition: all 0.2s;
+  display: inline-block;
+}
+.tag-pill:hover {
+  background: rgba(0, 217, 126, 0.16);
+  border-color: var(--green);
+}
+
+/* ── Proficiency bar ── */
+.prof-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Point arrow ── */
+.point-arrow { color: var(--green); font-size: 0.65rem; margin-top: 0.45rem; flex-shrink: 0; }
+
+/* ── Aurora orb animations ── */
+@keyframes aurora-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(80px, 60px) scale(1.12); }
+  66%       { transform: translate(-40px, 100px) scale(0.92); }
+}
+@keyframes aurora-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  40%       { transform: translate(-100px, 80px) scale(1.1); }
+  70%       { transform: translate(60px, -40px) scale(0.95); }
+}
+@keyframes aurora-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  30%       { transform: translate(60px, -80px) scale(1.08); }
+  60%       { transform: translate(-80px, 40px) scale(0.9); }
+}
+@keyframes aurora-4 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  45%       { transform: translate(-70px, -60px) scale(1.15); }
+  80%       { transform: translate(50px, 30px) scale(0.88); }
+}
+@keyframes aurora-5 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  35%       { transform: translate(90px, -50px) scale(1.1); }
+  65%       { transform: translate(-30px, 80px) scale(0.93); }
+}
+
+/* ── Magnetic button ── */
+.magnetic-btn {
+  transition: transform 0.18s cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform;
+}
+
+/* ── Gradient animated text (Hero name) ── */
+@keyframes gradient-shift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.gradient-text-animated {
+  background: linear-gradient(270deg, #00d97e, #0ea5e9, #7c3aed, #00d97e, #38bdf8, #00d97e);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 6s ease infinite;
+}
+
+/* ── Shimmer on cards ── */
+@keyframes shimmer-sweep {
+  0%   { transform: translateX(-100%) skewX(-15deg); }
+  100% { transform: translateX(300%) skewX(-15deg); }
+}
+.shimmer-card {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, rgba(0,217,126,0.04), transparent);
+  transform: translateX(-100%) skewX(-15deg);
+  pointer-events: none;
+}
+.shimmer-card:hover::after {
+  animation: shimmer-sweep 0.8s ease forwards;
+}
+
+/* ── Scanline overlay (replaces noise-overlay) ── */
+.scanline-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 217, 126, 0.015) 2px,
+    rgba(0, 217, 126, 0.015) 4px
+  );
+  opacity: 0.5;
+}
+
+/* ── Achievement number glow ── */
+.ach-number-glow {
+  text-shadow: 0 0 30px rgba(0, 217, 126, 0.6), 0 0 60px rgba(0, 217, 126, 0.3);
+}
+
+/* ── Typewriter cursor glow ── */
+.typed-glow {
+  text-shadow: 0 0 20px rgba(0, 217, 126, 0.8), 0 0 40px rgba(0, 217, 126, 0.4);
+}
+
+/* ── Hide cursor on mobile ── */
+@media (max-width: 767px) {
+  * { cursor: auto !important; }
+}
